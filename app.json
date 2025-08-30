@@ -1,18 +1,21 @@
 {
-  "scheme": "acme",
-  "userInterfaceStyle": "automatic",
-  "orientation": "default",
-  "web": {
-    "output": "static"
-  },
-  "plugins": [
-    [
-      "expo-router",
-      {
-        "origin": "https://n"
-      }
+  "expo": {
+    "name": "expo-products-app",
+    "slug": "expo-products-app",
+    "version": "1.0.0",
+    "scheme": "products-app",
+    "userInterfaceStyle": "automatic",
+    "orientation": "default",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "web": {
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router"
     ]
-  ],
-  "name": "expo-products-app",
-  "slug": "expo-products-app"
+  }
 }
