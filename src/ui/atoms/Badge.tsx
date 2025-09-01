@@ -17,7 +17,9 @@ const badgeVariants = cva(
         default: cn('bg-primary border-transparent', Platform.select({web: '[a&]:hover:bg-primary/90'})),
         secondary: cn('bg-secondary border-transparent', Platform.select({web: '[a&]:hover:bg-secondary/90'})),
         destructive: cn('bg-destructive border-transparent', Platform.select({web: '[a&]:hover:bg-destructive/90'})),
-        outline: Platform.select({web: '[a&]:hover:bg-accent [a&]:hover:text-accent-foreground'}),
+        outline: Platform.select({
+          web: '[a&]:hover:bg-accent [a&]:hover:text-accent-foreground',
+        }),
       },
     },
     defaultVariants: {

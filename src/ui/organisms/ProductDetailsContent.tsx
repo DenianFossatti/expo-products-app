@@ -20,7 +20,6 @@ export const ProductDetailsContent: React.FC<ProductDetailsContentProps> = ({pro
 
   return (
     <ScrollView className='flex-1' showsVerticalScrollIndicator={false}>
-      {/* Product Images */}
       <View className='bg-white'>
         <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false}>
           {product.images.map((image, index) => (
@@ -28,24 +27,22 @@ export const ProductDetailsContent: React.FC<ProductDetailsContentProps> = ({pro
               key={index}
               source={{uri: image}}
               style={{width: screenWidth, height: 300}}
-              resizeMode='cover'
+              resizeMode='contain'
               className='bg-gray-100'
             />
           ))}
         </ScrollView>
 
-        {/* Discount Badge */}
         {product.discountPercentage > 0 && (
           <View className='absolute left-4 top-4'>
             <Badge variant='destructive' className='shadow-lg'>
-              <Text className='font-semibold'>-{Math.round(product.discountPercentage)}%</Text>
+              <Text className='font-semibold'>-{product.discountPercentage}%</Text>
             </Badge>
           </View>
         )}
       </View>
 
       <View className='gap-2 p-4'>
-        {/* Product Info */}
         <Card>
           <CardContent className='gap-4 p-4'>
             <View className='gap-2'>
@@ -55,7 +52,6 @@ export const ProductDetailsContent: React.FC<ProductDetailsContentProps> = ({pro
               </Text>
             </View>
 
-            {/* Price and Rating */}
             <View className='flex-row items-center justify-between'>
               <View className='gap-1'>
                 {product.discountPercentage > 0 ? (
@@ -68,13 +64,12 @@ export const ProductDetailsContent: React.FC<ProductDetailsContentProps> = ({pro
                 )}
               </View>
 
-              <View className='flex-row items-center rounded-full bg-yellow-50 px-3 py-2'>
-                <Star size={16} className='mr-1 text-yellow-500' fill='#eab308' />
+              <View className='flex-row items-center gap-2 rounded-full bg-yellow-50 px-3 py-2'>
+                <Star size={16} className='text-yellow-500' color='#eab308' fill='#eab308' />
                 <Text className='font-semibold text-gray-800'>{product.rating.toFixed(1)}</Text>
               </View>
             </View>
 
-            {/* Stock Status */}
             <View className='flex-row items-center gap-2'>
               <Package size={16} className='text-gray-600' />
               <Badge variant={product.isInStock ? 'secondary' : 'destructive'}>
@@ -84,7 +79,6 @@ export const ProductDetailsContent: React.FC<ProductDetailsContentProps> = ({pro
           </CardContent>
         </Card>
 
-        {/* Description */}
         <Card>
           <CardContent className='p-4'>
             <Text className='mb-2 text-lg font-semibold text-gray-900'>Description</Text>
@@ -92,7 +86,6 @@ export const ProductDetailsContent: React.FC<ProductDetailsContentProps> = ({pro
           </CardContent>
         </Card>
 
-        {/* Product Details */}
         <Card>
           <CardContent className='gap-3 p-4'>
             <Text className='text-lg font-semibold text-gray-900'>Product Details</Text>
@@ -125,7 +118,6 @@ export const ProductDetailsContent: React.FC<ProductDetailsContentProps> = ({pro
           </CardContent>
         </Card>
 
-        {/* Shipping & Warranty */}
         <Card>
           <CardContent className='gap-3 p-4'>
             <Text className='text-lg font-semibold text-gray-900'>Shipping & Warranty</Text>
@@ -156,7 +148,6 @@ export const ProductDetailsContent: React.FC<ProductDetailsContentProps> = ({pro
           </CardContent>
         </Card>
 
-        {/* Tags */}
         {product.tags && product.tags.length > 0 && (
           <Card>
             <CardContent className='p-4'>
@@ -172,7 +163,6 @@ export const ProductDetailsContent: React.FC<ProductDetailsContentProps> = ({pro
           </Card>
         )}
 
-        {/* Reviews */}
         {product.reviews && product.reviews.length > 0 && (
           <Card>
             <CardContent className='p-4'>
@@ -182,8 +172,8 @@ export const ProductDetailsContent: React.FC<ProductDetailsContentProps> = ({pro
                   <View key={index} className='border-b border-gray-100 pb-3 last:border-b-0'>
                     <View className='mb-2 flex-row items-center justify-between'>
                       <Text className='font-medium text-gray-900'>{review.reviewerName}</Text>
-                      <View className='flex-row items-center'>
-                        <Star size={12} className='mr-1 text-yellow-500' fill='#eab308' />
+                      <View className='flex-row items-center gap-2'>
+                        <Star size={12} className='text-yellow-500' color='#eab308' fill='#eab308' />
                         <Text className='text-sm text-gray-600'>{review.rating}</Text>
                       </View>
                     </View>

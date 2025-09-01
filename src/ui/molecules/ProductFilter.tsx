@@ -1,26 +1,33 @@
 import React, {useState} from 'react'
 import {View, Modal, ScrollView} from 'react-native'
 import {Filter, X} from 'lucide-react-native'
-import {useFilterStore} from '@/stores/filter.store'
-import {useCategories} from '@/hooks/useCategories'
 import {cn} from '@/lib/utils'
 import {Button, Badge, Text} from '@/ui/atoms'
+import {Category} from '@/types/domain.types'
 
-export const ProductFilter: React.FC = () => {
+interface ProductFilterProps {
+  categories?: Category[]
+  categoriesLoading: boolean
+  selectedCategory?: string
+  activeFiltersCount: number
+  hasFilters: boolean
+  onCategorySelect: (categorySlug: string) => void
+  onClearFilters: () => void
+}
+
+export const ProductFilter: React.FC<ProductFilterProps> = ({
+  categories,
+  categoriesLoading,
+  selectedCategory,
+  activeFiltersCount,
+  hasFilters,
+  onCategorySelect,
+  onClearFilters,
+}) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const {filters, setFilters, clearFilters, hasActiveFilters, getActiveFiltersCount} = useFilterStore()
-  const {data: categories, isLoading: categoriesLoading} = useCategories()
-
-  const activeFiltersCount = getActiveFiltersCount()
-  const hasFilters = hasActiveFilters()
-
-  const handleCategorySelect = (categorySlug: string) => {
-    const newCategory = filters.category === categorySlug ? undefined : categorySlug
-    setFilters({category: newCategory})
-  }
 
   const handleClearFilters = () => {
-    clearFilters()
+    onClearFilters()
     setIsModalVisible(false)
   }
 
@@ -31,7 +38,11 @@ export const ProductFilter: React.FC = () => {
         onPress={() => setIsModalVisible(true)}
         className='flex-row items-center space-x-2'
       >
-        <Filter size={16} className={hasFilters ? 'text-primary-foreground' : 'text-foreground'} />
+        <Filter
+          color={hasFilters ? 'white' : 'black'}
+          size={16}
+          className={hasFilters ? 'text-primary-foreground' : 'text-foreground'}
+        />
         <Text className={cn('font-medium', hasFilters ? 'text-primary-foreground' : 'text-foreground')}>Filter</Text>
         {activeFiltersCount > 0 && (
           <Badge variant='secondary' className='ml-1'>
@@ -70,15 +81,15 @@ export const ProductFilter: React.FC = () => {
                   {categories?.map(category => (
                     <Button
                       key={category.slug}
-                      variant={filters.category === category.slug ? 'default' : 'outline'}
+                      variant={selectedCategory === category.slug ? 'default' : 'outline'}
                       size='sm'
-                      onPress={() => handleCategorySelect(category.slug)}
+                      onPress={() => onCategorySelect(category.slug)}
                       className='rounded-full'
                     >
                       <Text
                         className={cn(
                           'capitalize text-sm',
-                          filters.category === category.slug ? 'text-primary-foreground' : 'text-foreground'
+                          selectedCategory === category.slug ? 'text-primary-foreground' : 'text-foreground'
                         )}
                       >
                         {category.name}

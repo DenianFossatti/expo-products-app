@@ -1,60 +1,72 @@
-import React, {useMemo, useCallback, useEffect} from 'react'
+import React from 'react'
 import {SafeAreaView} from 'react-native-safe-area-context'
-import {useInfiniteProducts} from '@/hooks/useProducts'
-import {useFilterStore} from '@/stores/filter.store'
 import {LoadingSpinner, ErrorMessage, Text} from '@/ui/atoms'
 import {ProductListHeader, ProductList} from '@/ui/organisms'
-import {GetProductsParams} from '@/services/products.service'
-import {useGlobalSearchParams} from 'expo-router'
+import {Product, Category, ProductSort as ProductSortType} from '@/types/domain.types'
 
-export const HomeTemplate: React.FC = () => {
-  const {category} = useGlobalSearchParams<{
-    category: string
-  }>()
-  const {filters, sort, hasActiveFilters, setFilters} = useFilterStore()
+interface HomeTemplateProps {
+  // Loading states
+  isLoading: boolean
+  error?: Error | null
 
-  useEffect(() => {
-    if (!category) return
+  // Data
+  products: Product[]
+  categories?: Category[]
+  categoriesLoading: boolean
+  totalProducts: number
 
-    setFilters({category: category})
-  }, [category, setFilters])
+  // Filter & Sort state
+  selectedCategory?: string
+  currentSort: ProductSortType
+  hasActiveFilters: boolean
+  activeFiltersCount: number
+  hasFilters: boolean
 
-  // Build query parameters based on filters and sort
-  const queryParams = useMemo(() => {
-    const params: GetProductsParams = {}
+  // List state
+  isRefetching: boolean
+  isFetchingNextPage: boolean
+  hasNextPage: boolean
 
-    if (filters.category) {
-      params.category = filters.category
-    }
+  // Handlers
+  onRefresh: () => void
+  onLoadMore: () => void
+  onCategorySelect: (categorySlug: string) => void
+  onSortSelect: (sortOption: ProductSortType) => void
+  onClearFilters: () => void
+  onRetry: () => void
+}
 
-    // Map sort field to API field names
-    const sortFieldMap = {
-      title: 'title',
-      price: 'price',
-      rating: 'rating',
-    }
+export const HomeTemplate: React.FC<HomeTemplateProps> = ({
+  // Loading states
+  isLoading,
+  error,
 
-    params.sortBy = sortFieldMap[sort.field]
-    params.order = sort.order
+  // Data
+  products,
+  categories,
+  categoriesLoading,
+  totalProducts,
 
-    return params
-  }, [filters.category, sort])
+  // Filter & Sort state
+  selectedCategory,
+  currentSort,
+  hasActiveFilters,
+  activeFiltersCount,
+  hasFilters,
 
-  const {data, isLoading, error, refetch, isRefetching, fetchNextPage, hasNextPage, isFetchingNextPage} =
-    useInfiniteProducts(queryParams)
+  // List state
+  isRefetching,
+  isFetchingNextPage,
+  hasNextPage,
 
-  const allProducts = useMemo(() => {
-    return data?.pages.flatMap(page => page.products) ?? []
-  }, [data])
-
-  const totalProducts = data?.pages[0]?.total ?? 0
-
-  const handleLoadMore = useCallback(() => {
-    if (hasNextPage && !isFetchingNextPage) {
-      fetchNextPage()
-    }
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage])
-
+  // Handlers
+  onRefresh,
+  onLoadMore,
+  onCategorySelect,
+  onSortSelect,
+  onClearFilters,
+  onRetry,
+}) => {
   if (isLoading) {
     return (
       <SafeAreaView className='flex-1 bg-gray-50'>
@@ -67,7 +79,7 @@ export const HomeTemplate: React.FC = () => {
   if (error) {
     return (
       <SafeAreaView className='flex-1 bg-gray-50'>
-        <ErrorMessage message='Failed to load products. Please try again.' onRetry={() => refetch()} />
+        <ErrorMessage message='Failed to load products. Please try again.' onRetry={onRetry} />
       </SafeAreaView>
     )
   }
@@ -77,21 +89,32 @@ export const HomeTemplate: React.FC = () => {
       <ProductListHeader
         title='Products'
         totalProducts={totalProducts}
-        currentProducts={allProducts.length}
-        hasActiveFilters={hasActiveFilters()}
+        currentProducts={products.length}
+        hasActiveFilters={hasActiveFilters}
+        // Filter props
+        categories={categories}
+        categoriesLoading={categoriesLoading}
+        selectedCategory={selectedCategory}
+        activeFiltersCount={activeFiltersCount}
+        hasFilters={hasFilters}
+        onCategorySelect={onCategorySelect}
+        onClearFilters={onClearFilters}
+        // Sort props
+        currentSort={currentSort}
+        onSortSelect={onSortSelect}
       />
 
       <ProductList
-        products={allProducts}
-        isLoading={isLoading}
+        onClearFilters={onClearFilters}
+        products={products}
         isRefetching={isRefetching}
         isFetchingNextPage={isFetchingNextPage}
-        hasNextPage={hasNextPage ?? false}
+        hasNextPage={hasNextPage}
         error={error}
         totalProducts={totalProducts}
-        hasActiveFilters={hasActiveFilters()}
-        onRefresh={refetch}
-        onLoadMore={handleLoadMore}
+        hasActiveFilters={hasActiveFilters}
+        onRefresh={onRefresh}
+        onLoadMore={onLoadMore}
       />
     </SafeAreaView>
   )

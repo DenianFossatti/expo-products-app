@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import {View, TouchableOpacity, Modal} from 'react-native'
 import {ArrowUpDown, X, Check} from 'lucide-react-native'
-import {useFilterStore} from '@/stores/filter.store'
 import {ProductSort as ProductSortType} from '@/types/domain.types'
 import {cn} from '@/lib/utils'
 import {Button, Text} from '@/ui/atoms'
@@ -43,12 +42,16 @@ const SORT_OPTIONS: {
   },
 ]
 
-export const ProductSort: React.FC = () => {
+interface ProductSortProps {
+  currentSort: ProductSortType
+  onSortSelect: (sortOption: ProductSortType) => void
+}
+
+export const ProductSort: React.FC<ProductSortProps> = ({currentSort, onSortSelect}) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const {sort, setSort} = useFilterStore()
 
   const handleSortSelect = (sortOption: ProductSortType) => {
-    setSort(sortOption)
+    onSortSelect(sortOption)
     setIsModalVisible(false)
   }
 
@@ -78,7 +81,7 @@ export const ProductSort: React.FC = () => {
 
           <View className='flex-1 p-4'>
             {SORT_OPTIONS.map((option, index) => {
-              const isSelected = option.value.field === sort.field && option.value.order === sort.order
+              const isSelected = option.value.field === currentSort.field && option.value.order === currentSort.order
 
               return (
                 <TouchableOpacity
@@ -98,7 +101,7 @@ export const ProductSort: React.FC = () => {
 
                   {isSelected && (
                     <View className='size-6 items-center justify-center rounded-full bg-primary'>
-                      <Check size={14} className='text-primary-foreground' />
+                      <Check color='white' size={14} />
                     </View>
                   )}
                 </TouchableOpacity>

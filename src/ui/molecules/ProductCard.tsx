@@ -32,12 +32,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({product, onPress, class
     <TouchableOpacity onPress={handlePress} className={cn('mb-4', className)} activeOpacity={0.95}>
       <Card className='overflow-hidden border-border/50 bg-card shadow-lg'>
         <View className='relative'>
-          <Image source={{uri: product.thumbnail}} className='h-52 w-full bg-muted' resizeMode='cover' />
+          <Image source={{uri: product.thumbnail}} className='h-52 w-full bg-muted' resizeMode='contain' />
 
           {product.discountPercentage > 0 && (
             <View className='absolute left-3 top-3'>
               <Badge variant='destructive' className='shadow-sm'>
-                <Text>-{Math.round(product.discountPercentage)}%</Text>
+                <Text>-{product.discountPercentage}%</Text>
               </Badge>
             </View>
           )}
@@ -68,8 +68,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({product, onPress, class
               )}
             </View>
 
-            <View className='flex-row items-center rounded-full bg-secondary/50 px-2 py-1'>
-              <Star size={14} className='mr-1 text-yellow-500' fill='#eab308' />
+            <View className='flex-row items-center gap-2 rounded-full bg-secondary/50 px-2 py-1'>
+              <Star size={14} className='text-yellow-500' color='#eab308' fill='#eab308' />
               <Text className='text-sm font-medium text-secondary-foreground'>{product.rating.toFixed(1)}</Text>
             </View>
           </View>

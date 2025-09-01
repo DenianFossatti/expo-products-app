@@ -2,12 +2,12 @@ import React, {useCallback} from 'react'
 import {FlatList, RefreshControl, View} from 'react-native'
 import {Product} from '@/types/domain.types'
 import {ProductCard, ProductListFooter} from '@/ui/molecules'
-import {Text} from '@/ui/atoms'
+import {Button, Text} from '@/ui/atoms'
 
 interface ProductListProps {
   products: Product[]
-  isLoading: boolean
   isRefetching: boolean
+  onClearFilters: () => void
   isFetchingNextPage: boolean
   hasNextPage: boolean
   error?: Error | null
@@ -19,8 +19,8 @@ interface ProductListProps {
 
 export const ProductList: React.FC<ProductListProps> = ({
   products,
-  isLoading,
   isRefetching,
+  onClearFilters,
   isFetchingNextPage,
   hasNextPage,
   error,
@@ -61,13 +61,16 @@ export const ProductList: React.FC<ProductListProps> = ({
       }
       showsVerticalScrollIndicator={false}
       onEndReached={handleLoadMore}
-      onEndReachedThreshold={0.1}
+      onEndReachedThreshold={0.3}
       ListFooterComponent={products.length > 0 ? renderFooter : null}
       ListEmptyComponent={
-        <View className='flex-1 items-center justify-center py-12'>
+        <View className='flex-1 items-center justify-center gap-4 py-12'>
           <Text className='text-center text-lg text-gray-500'>
             {hasActiveFilters ? 'No products match your criteria' : 'No products available'}
           </Text>
+          <Button variant='default' size='sm' onPress={onClearFilters}>
+            <Text>Clear Filters</Text>
+          </Button>
         </View>
       }
     />

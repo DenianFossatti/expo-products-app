@@ -22,12 +22,12 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({
   return (
     <View className={cn('flex-1 justify-center items-center p-4', className)}>
       <Card className='w-full max-w-sm'>
-        <CardContent className='items-center space-y-4 p-6'>
+        <CardContent className='items-center gap-4 p-6'>
           <View className='size-12 items-center justify-center rounded-full bg-destructive/10'>
             <AlertCircle size={24} className='text-destructive' />
           </View>
 
-          <View className='items-center space-y-2'>
+          <View className='items-center gap-2'>
             <Text className='text-center text-lg font-semibold text-card-foreground'>{title}</Text>
             <Text className='text-center leading-relaxed text-muted-foreground'>{message}</Text>
           </View>

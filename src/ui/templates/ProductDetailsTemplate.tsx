@@ -1,15 +1,26 @@
 import React from 'react'
 import {SafeAreaView} from 'react-native-safe-area-context'
-import {useLocalSearchParams} from 'expo-router'
-import {useProduct} from '@/hooks/useProducts'
 import {LoadingSpinner, ErrorMessage, Text} from '@/ui/atoms'
-import {ProductDetailsHeader, ProductDetailsContent} from '@/ui/organisms'
+import {ProductDetailsHeader, ProductDetailsContent, NotFoundMessage} from '@/ui/organisms'
+import {Product} from '@/types/domain.types'
 
-export const ProductDetailsTemplate: React.FC = () => {
-  const {id} = useLocalSearchParams<{id: string}>()
+interface ProductDetailsTemplateProps {
+  isLoading: boolean
+  error?: Error | null
+  product?: Product
+  isNotFound?: boolean
+  onRetry: () => void
+  onGoBack?: () => void
+}
 
-  const {data: product, isLoading, error, refetch} = useProduct(id)
-
+export const ProductDetailsTemplate: React.FC<ProductDetailsTemplateProps> = ({
+  isLoading,
+  error,
+  product,
+  isNotFound,
+  onRetry,
+  onGoBack,
+}) => {
   if (isLoading) {
     return (
       <SafeAreaView className='flex-1 bg-gray-50'>
@@ -19,10 +30,23 @@ export const ProductDetailsTemplate: React.FC = () => {
     )
   }
 
+  if (isNotFound) {
+    return (
+      <SafeAreaView className='flex-1 bg-gray-50'>
+        <NotFoundMessage
+          title='Product not found'
+          message='The product you are looking for does not exist or has been removed.'
+          onGoBack={onGoBack}
+          onRetry={onRetry}
+        />
+      </SafeAreaView>
+    )
+  }
+
   if (error || !product) {
     return (
       <SafeAreaView className='flex-1 bg-gray-50'>
-        <ErrorMessage message='Failed to load product details. Please try again.' onRetry={() => refetch()} />
+        <ErrorMessage message='Failed to load product details. Please try again.' onRetry={onRetry} />
       </SafeAreaView>
     )
   }

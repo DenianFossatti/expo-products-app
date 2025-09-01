@@ -18,22 +18,21 @@ interface RequestConfig {
   headers?: Record<string, string>
   body?: string
   timeout?: number
-  retries?: number
 }
 
 class ApiClient {
   private baseURL: string
   private defaultTimeout: number
-  private defaultRetries: number
 
   constructor(baseURL: string = BASE_URL) {
     this.baseURL = baseURL
-    this.defaultTimeout = 10000 // 10 seconds
-    this.defaultRetries = 3
+    this.defaultTimeout = 15000 // 15 seconds
   }
 
   private async makeRequest<T>(endpoint: string, config: RequestConfig = {}): Promise<T> {
-    const {method = 'GET', headers = {}, body, timeout = this.defaultTimeout, retries = this.defaultRetries} = config
+    const {method = 'GET', headers = {}, body, timeout = this.defaultTimeout} = config
+
+    console.log('makeRequest', endpoint, config) // TODO: remove this later
 
     const url = `${this.baseURL}${endpoint}`
     const controller = new AbortController()
@@ -53,41 +52,34 @@ class ApiClient {
 
     let lastError: Error
 
-    for (let attempt = 0; attempt <= retries; attempt++) {
-      try {
-        const response = await fetch(url, requestConfig)
-        clearTimeout(timeoutId)
+    try {
+      const response = await fetch(url, requestConfig)
+      clearTimeout(timeoutId)
 
-        if (!response.ok) {
-          const errorData: ApiErrorDTO = await response.json().catch(() => ({
-            message: 'Unknown error occurred',
-            status: response.status,
-          }))
+      if (!response.ok) {
+        const errorData: ApiErrorDTO = await response.json().catch(() => ({
+          message: 'Unknown error occurred',
+          status: response.status,
+        }))
 
-          throw new ApiError(
-            errorData.message || `HTTP ${response.status}`,
-            response.status,
-            errorData.status?.toString()
-          )
-        }
+        throw new ApiError(
+          errorData.message || `HTTP ${response.status}`,
+          response.status,
+          errorData.status?.toString()
+        )
+      }
 
-        return await response.json()
-      } catch (error) {
-        lastError = error as Error
+      return await response.json()
+    } catch (error) {
+      lastError = error as Error
 
-        // Don't retry on client errors (4xx) or abort errors
-        if (error instanceof ApiError && error.status && error.status < 500) {
-          throw error
-        }
+      // Don't retry on client errors (4xx) or abort errors
+      if (error instanceof ApiError && error.status && error.status < 500) {
+        throw error
+      }
 
-        if (error instanceof Error && error.name === 'AbortError') {
-          throw new ApiError('Request timeout', 408, 'TIMEOUT')
-        }
-
-        // Wait before retry (exponential backoff)
-        if (attempt < retries) {
-          await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000))
-        }
+      if (error instanceof Error && error.name === 'AbortError') {
+        throw new ApiError('Request timeout', 408, 'TIMEOUT')
       }
     }
 

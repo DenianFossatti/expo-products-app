@@ -16,7 +16,7 @@ export class ProductMapper {
       thumbnail: dto.thumbnail,
       images: dto.images,
       isInStock: dto.stock > 0,
-      discountedPrice: dto.price - (dto.price * dto.discountPercentage) / 100,
+      discountedPrice: dto.price - dto.price * (dto.discountPercentage / 100),
       tags: dto.tags,
       sku: dto.sku,
       weight: dto.weight,
