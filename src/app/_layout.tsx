@@ -5,6 +5,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {useState} from 'react'
 import {ApiError} from '@/services/api/client'
+import {ErrorBoundary} from '@/ErrorBoundary'
 
 export default function Layout() {
   const [queryClient] = useState(
@@ -29,11 +30,13 @@ export default function Layout() {
   )
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <SafeAreaProvider>
-        <Slot />
-        <PortalHost />
-      </SafeAreaProvider>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <SafeAreaProvider>
+          <Slot />
+          <PortalHost />
+        </SafeAreaProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   )
 }
