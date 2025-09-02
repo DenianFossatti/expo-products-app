@@ -6,6 +6,15 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {useState} from 'react'
 import {ApiError} from '@/services/api/client'
 import {ErrorBoundary} from '@/ErrorBoundary'
+import {OneSignal} from 'react-native-onesignal'
+
+OneSignal.initialize(process.env.EXPO_PUBLIC_ONESIGNAL_APP_ID)
+OneSignal.Notifications.requestPermission(false)
+
+export const unstable_settings = {
+  // Ensure any route can link back to `/`
+  initialRouteName: 'index',
+}
 
 export default function Layout() {
   const [queryClient] = useState(

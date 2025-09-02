@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "288268978503",
+    "project_id": "products-app-e0568",
+    "storage_bucket": "products-app-e0568.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288268978503:android:b6abfe1fffa8ba2b4c2462",
+        "android_client_info": {
+          "package_name": "com.denianf.expoproductsapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDS103lSDhni_ntT9fl2k7hYDHzFAeIa3w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
