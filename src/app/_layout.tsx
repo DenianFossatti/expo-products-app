@@ -7,8 +7,9 @@ import {useState} from 'react'
 import {ApiError} from '@/services/api/client'
 import {ErrorBoundary} from '@/ErrorBoundary'
 import {OneSignal} from 'react-native-onesignal'
+import {env} from '@/env'
 
-OneSignal.initialize(process.env.EXPO_PUBLIC_ONESIGNAL_APP_ID)
+OneSignal.initialize(env.ONESIGNAL_APP_ID)
 OneSignal.Notifications.requestPermission(false)
 
 export const unstable_settings = {

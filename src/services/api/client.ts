@@ -1,7 +1,5 @@
 import {ApiErrorDTO} from '../../types/api.types'
 
-const BASE_URL = 'https://dummyjson.com'
-
 export class ApiError extends Error {
   constructor(
     message: string,
@@ -20,13 +18,13 @@ interface RequestConfig {
   timeout?: number
 }
 
-class ApiClient {
+export class ApiClient {
   private baseURL: string
   private defaultTimeout: number
 
-  constructor(baseURL: string = BASE_URL) {
+  constructor(baseURL: string) {
     this.baseURL = baseURL
-    this.defaultTimeout = 15000 // 15 seconds
+    this.defaultTimeout = 15000
   }
 
   private async makeRequest<T>(endpoint: string, config: RequestConfig = {}): Promise<T> {
@@ -111,5 +109,3 @@ class ApiClient {
     return this.makeRequest<T>(endpoint, {...config, method: 'DELETE'})
   }
 }
-
-export const apiClient = new ApiClient()

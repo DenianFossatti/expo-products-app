@@ -1,5 +1,9 @@
-import {apiClient} from './api/client'
+import {ApiClient} from './api/client'
 import {ProductsResponseDTO, ProductDTO, CategoryDTO} from '../types/api.types'
+
+import {env} from '@/env'
+
+const productsApiClient = new ApiClient(env.PRODUCTS_API_URL)
 
 export interface GetProductsParams {
   limit?: number
@@ -34,15 +38,15 @@ export class ProductsService {
       endpoint += `?${searchParams.toString()}`
     }
 
-    return apiClient.get<ProductsResponseDTO>(endpoint)
+    return productsApiClient.get<ProductsResponseDTO>(endpoint)
   }
 
   async getProduct(params: GetProductParams): Promise<ProductDTO> {
-    return apiClient.get<ProductDTO>(`/products/${params.id}`)
+    return productsApiClient.get<ProductDTO>(`/products/${params.id}`)
   }
 
   async getCategories(): Promise<CategoryDTO[]> {
-    return apiClient.get<CategoryDTO[]>('/products/categories')
+    return productsApiClient.get<CategoryDTO[]>('/products/categories')
   }
 }
 
