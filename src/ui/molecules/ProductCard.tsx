@@ -1,6 +1,5 @@
 import React from 'react'
 import {View, Image, TouchableOpacity} from 'react-native'
-import {router} from 'expo-router'
 import {Star} from 'lucide-react-native'
 import {Product} from '@/types/domain.types'
 import {cn} from '@/lib/utils'
@@ -8,17 +7,13 @@ import {Card, CardContent, Badge, Text} from '@/ui/atoms'
 
 interface ProductCardProps {
   product: Product
-  onPress?: (product: Product) => void
+  onPress: (product: Product) => void
   className?: string
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({product, onPress, className}) => {
   const handlePress = () => {
-    if (onPress) {
-      onPress(product)
-    } else {
-      router.push(`/product/${product.id}`)
-    }
+    onPress(product)
   }
 
   const formatPrice = (price: number) => {

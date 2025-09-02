@@ -2,7 +2,7 @@ import {useLocalSearchParams, router} from 'expo-router'
 import {ProductDetailsTemplate} from '@/ui/templates'
 import {useProduct} from '@/hooks/useProducts'
 import {ApiError} from '@/services/api/client'
-import {useMemo} from 'react'
+import {useCallback, useMemo} from 'react'
 
 export default function ProductDetailsScreen() {
   const {id} = useLocalSearchParams<{id: string}>()
@@ -11,9 +11,9 @@ export default function ProductDetailsScreen() {
 
   const isNotFound = useMemo(() => error instanceof ApiError && error.status === 404, [error])
 
-  const handleGoBack = () => {
+  const onBack = useCallback(() => {
     router.back()
-  }
+  }, [])
 
   return (
     <ProductDetailsTemplate
@@ -22,7 +22,7 @@ export default function ProductDetailsScreen() {
       product={product}
       isNotFound={isNotFound}
       onRetry={() => refetch()}
-      onGoBack={handleGoBack}
+      onBack={onBack}
     />
   )
 }

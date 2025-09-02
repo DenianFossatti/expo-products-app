@@ -10,7 +10,7 @@ interface ProductDetailsTemplateProps {
   product?: Product
   isNotFound?: boolean
   onRetry: () => void
-  onGoBack?: () => void
+  onBack?: () => void
 }
 
 export const ProductDetailsTemplate: React.FC<ProductDetailsTemplateProps> = ({
@@ -19,7 +19,7 @@ export const ProductDetailsTemplate: React.FC<ProductDetailsTemplateProps> = ({
   product,
   isNotFound,
   onRetry,
-  onGoBack,
+  onBack,
 }) => {
   if (isLoading) {
     return (
@@ -36,7 +36,7 @@ export const ProductDetailsTemplate: React.FC<ProductDetailsTemplateProps> = ({
         <NotFoundMessage
           title='Product not found'
           message='The product you are looking for does not exist or has been removed.'
-          onGoBack={onGoBack}
+          onBack={onBack}
           onRetry={onRetry}
         />
       </SafeAreaView>
@@ -53,7 +53,7 @@ export const ProductDetailsTemplate: React.FC<ProductDetailsTemplateProps> = ({
 
   return (
     <SafeAreaView className='flex-1 bg-gray-50'>
-      <ProductDetailsHeader />
+      <ProductDetailsHeader onBack={onBack} />
       <ProductDetailsContent product={product} />
     </SafeAreaView>
   )

@@ -33,6 +33,7 @@ interface HomeTemplateProps {
   onCategorySelect: (categorySlug: string) => void
   onSortSelect: (sortOption: ProductSortType) => void
   onClearFilters: () => void
+  onProductPress: (product: Product) => void
   onRetry: () => void
 }
 
@@ -65,6 +66,7 @@ export const HomeTemplate: React.FC<HomeTemplateProps> = ({
   onCategorySelect,
   onSortSelect,
   onClearFilters,
+  onProductPress,
   onRetry,
 }) => {
   if (isLoading) {
@@ -114,6 +116,7 @@ export const HomeTemplate: React.FC<HomeTemplateProps> = ({
         totalProducts={totalProducts}
         hasActiveFilters={hasActiveFilters}
         onRefresh={onRefresh}
+        onProductPress={onProductPress}
         onLoadMore={onLoadMore}
       />
     </SafeAreaView>

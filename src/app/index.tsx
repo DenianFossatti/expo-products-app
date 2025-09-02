@@ -3,9 +3,9 @@ import {useInfiniteProducts} from '@/hooks/useProducts'
 import {useFilterStore} from '@/stores/filter.store'
 import {useCategories} from '@/hooks/useCategories'
 import {HomeTemplate} from '@/ui/templates'
-import {ProductSort as ProductSortType} from '@/types/domain.types'
+import {ProductSort as ProductSortType, Product} from '@/types/domain.types'
 import {GetProductsParams} from '@/services/products.service'
-import {useGlobalSearchParams} from 'expo-router'
+import {useGlobalSearchParams, router} from 'expo-router'
 
 export default function ProductsScreen() {
   const {category} = useGlobalSearchParams<{
@@ -76,6 +76,10 @@ export default function ProductsScreen() {
     clearFilters()
   }, [clearFilters])
 
+  const handleProductPress = useCallback((product: Product) => {
+    router.push(`/product/${product.id}`)
+  }, [])
+
   const activeFiltersCount = getActiveFiltersCount()
   const hasFilters = hasActiveFilters()
 
@@ -105,6 +109,7 @@ export default function ProductsScreen() {
       onCategorySelect={handleCategorySelect}
       onSortSelect={handleSortSelect}
       onClearFilters={handleClearFilters}
+      onProductPress={handleProductPress}
       onRetry={() => refetch()}
     />
   )

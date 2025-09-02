@@ -9,12 +9,12 @@ import {Text} from '../atoms/Text'
 interface NotFoundMessageProps {
   title: string
   message?: string
-  onGoBack?: () => void
+  onBack?: () => void
   onRetry?: () => void
   className?: string
 }
 
-export const NotFoundMessage: React.FC<NotFoundMessageProps> = ({title, message, onGoBack, onRetry, className}) => {
+export const NotFoundMessage: React.FC<NotFoundMessageProps> = ({title, message, onBack, onRetry, className}) => {
   return (
     <View className={cn('flex-1 justify-center items-center p-4', className)}>
       <Card className='w-full max-w-sm'>
@@ -29,8 +29,8 @@ export const NotFoundMessage: React.FC<NotFoundMessageProps> = ({title, message,
           </View>
 
           <View className='w-full gap-2'>
-            {onGoBack && (
-              <Button onPress={onGoBack} className='w-full flex-row items-center justify-center space-x-2'>
+            {onBack && (
+              <Button onPress={onBack} className='w-full flex-row items-center justify-center space-x-2'>
                 <ArrowLeft size={16} color='white' />
                 <Text className='font-medium text-primary-foreground'>Go Back</Text>
               </Button>

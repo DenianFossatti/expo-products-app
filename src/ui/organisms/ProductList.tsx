@@ -14,6 +14,7 @@ interface ProductListProps {
   totalProducts: number
   hasActiveFilters: boolean
   onRefresh: () => void
+  onProductPress: (product: Product) => void
   onLoadMore: () => void
 }
 
@@ -27,9 +28,10 @@ export const ProductList: React.FC<ProductListProps> = ({
   totalProducts,
   hasActiveFilters,
   onRefresh,
+  onProductPress,
   onLoadMore,
 }) => {
-  const renderProduct = ({item}: {item: Product}) => <ProductCard product={item} />
+  const renderProduct = ({item}: {item: Product}) => <ProductCard product={item} onPress={onProductPress} />
 
   const handleLoadMore = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) {
