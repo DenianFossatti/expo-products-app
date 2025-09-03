@@ -10,8 +10,10 @@
     "deploy": "npx expo export -p web && npx eas-cli@latest deploy",
     "prebuild": "expo prebuild",
     "lint": "expo lint",
+    "lint:fix": "expo lint --fix",
     "typecheck": "tsc --noEmit",
-    "env:check": "tsx --env-file .env ./src/env.ts"
+    "env:check": "tsx --env-file .env ./src/env.ts",
+    "prepare": "husky"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",
@@ -54,6 +56,8 @@
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-tailwindcss": "^3.18.2",
     "eslint-plugin-unused-imports": "^4.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.6",
     "prettier": "^3.6.2",
     "tsx": "^4.20.5",
     "typescript": "~5.8.3"

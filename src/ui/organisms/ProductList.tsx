@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useMemo} from 'react'
 import {FlatList, RefreshControl, View} from 'react-native'
 import {Product} from '@/types/domain.types'
 import {ProductCard, ProductListFooter} from '@/ui/molecules'
@@ -31,7 +31,10 @@ export const ProductList: React.FC<ProductListProps> = ({
   onProductPress,
   onLoadMore,
 }) => {
-  const renderProduct = ({item}: {item: Product}) => <ProductCard product={item} onPress={onProductPress} />
+  const renderProduct = useCallback(
+    ({item}: {item: Product}) => <ProductCard product={item} onPress={onProductPress} />,
+    [onProductPress]
+  )
 
   const handleLoadMore = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -39,7 +42,9 @@ export const ProductList: React.FC<ProductListProps> = ({
     }
   }, [hasNextPage, isFetchingNextPage, onLoadMore])
 
-  const renderFooter = useCallback(() => {
+  const FooterComponent = useMemo(() => {
+    if (products.length === 0) return null
+
     return (
       <ProductListFooter
         isLoading={isFetchingNextPage}
@@ -52,29 +57,41 @@ export const ProductList: React.FC<ProductListProps> = ({
     )
   }, [isFetchingNextPage, hasNextPage, handleLoadMore, error, totalProducts, products.length])
 
+  const EmptyComponent = useMemo(() => {
+    return (
+      <View className='flex-1 items-center justify-center gap-4 py-12'>
+        <Text className='text-center text-lg text-gray-500'>
+          {hasActiveFilters ? 'No products match your criteria' : 'No products available'}
+        </Text>
+        <Button variant='default' size='sm' onPress={onClearFilters}>
+          <Text>Clear Filters</Text>
+        </Button>
+      </View>
+    )
+  }, [hasActiveFilters, onClearFilters])
+
+  const refreshControl = useMemo(() => {
+    return <RefreshControl refreshing={isRefetching} onRefresh={onRefresh} />
+  }, [isRefetching, onRefresh])
+
+  const keyExtractor = useCallback((item: Product) => item.id.toString(), [])
+
+  const contentContainerStyle = useMemo(() => {
+    return {padding: 16}
+  }, [])
+
   return (
     <FlatList
       data={products}
-      keyExtractor={item => item.id.toString()}
+      keyExtractor={keyExtractor}
       renderItem={renderProduct}
-      contentContainerStyle={{padding: 16}}
-      refreshControl={
-        <RefreshControl refreshing={isRefetching} onRefresh={onRefresh} tintColor='#10b981' colors={['#10b981']} />
-      }
+      contentContainerStyle={contentContainerStyle}
+      refreshControl={refreshControl}
       showsVerticalScrollIndicator={false}
       onEndReached={handleLoadMore}
       onEndReachedThreshold={0.3}
-      ListFooterComponent={products.length > 0 ? renderFooter : null}
-      ListEmptyComponent={
-        <View className='flex-1 items-center justify-center gap-4 py-12'>
-          <Text className='text-center text-lg text-gray-500'>
-            {hasActiveFilters ? 'No products match your criteria' : 'No products available'}
-          </Text>
-          <Button variant='default' size='sm' onPress={onClearFilters}>
-            <Text>Clear Filters</Text>
-          </Button>
-        </View>
-      }
+      ListFooterComponent={FooterComponent}
+      ListEmptyComponent={EmptyComponent}
     />
   )
 }
