@@ -131,7 +131,7 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
             </View>
           </ScrollView>
 
-          <View className='border-t border-border bg-card p-4'>
+          <View className='mb-4 border-t border-border bg-card p-4'>
             <Button onPress={onApply} className='w-full'>
               <Text className='text-white'>Apply Filters</Text>
             </Button>
