@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, ActivityIndicator} from 'react-native'
 import {Loader2} from 'lucide-react-native'
-import {cn} from '@/lib/utils'
+import {cn} from '@/ui/tw'
 import {Text} from './Text'
 
 interface LoadingSpinnerProps {

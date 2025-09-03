@@ -1,5 +1,5 @@
 import {TextClassContext} from '@/ui/atoms/Text'
-import {cn} from '@/lib/utils'
+import {cn} from '@/ui/tw'
 import {cva, type VariantProps} from 'class-variance-authority'
 import {Platform, Pressable} from 'react-native'
 

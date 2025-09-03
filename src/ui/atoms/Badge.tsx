@@ -1,5 +1,5 @@
 import {TextClassContext} from '@/ui/atoms/Text'
-import {cn} from '@/lib/utils'
+import {cn} from '@/ui/tw'
 import * as Slot from '@rn-primitives/slot'
 import {cva, type VariantProps} from 'class-variance-authority'
 import {Platform, View, ViewProps} from 'react-native'

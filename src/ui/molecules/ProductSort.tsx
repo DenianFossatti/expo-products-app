@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {View, TouchableOpacity, Modal} from 'react-native'
 import {ArrowUpDown, X, Check} from 'lucide-react-native'
 import {ProductSort as ProductSortType} from '@/types/domain.types'
-import {cn} from '@/lib/utils'
+import {cn} from '@/ui/tw'
 import {Button, Text} from '@/ui/atoms'
 
 const SORT_OPTIONS: {

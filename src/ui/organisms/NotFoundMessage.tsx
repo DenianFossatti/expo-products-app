@@ -1,7 +1,7 @@
 import React from 'react'
 import {View} from 'react-native'
 import {Search, ArrowLeft} from 'lucide-react-native'
-import {cn} from '@/lib/utils'
+import {cn} from '@/ui/tw'
 import {Button} from '../atoms/Button'
 import {Card, CardContent} from '../atoms/Card'
 import {Text} from '../atoms/Text'

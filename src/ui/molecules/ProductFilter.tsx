@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {View, Modal, ScrollView} from 'react-native'
 import {Filter, X} from 'lucide-react-native'
-import {cn} from '@/lib/utils'
+import {cn} from '@/ui/tw'
 import {Button, Badge, Text} from '@/ui/atoms'
 import {Category} from '@/types/domain.types'
 

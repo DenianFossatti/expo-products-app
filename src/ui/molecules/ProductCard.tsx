@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import {View, Image, TouchableOpacity} from 'react-native'
 import {Star} from 'lucide-react-native'
 import {Product} from '@/types/domain.types'
-import {cn} from '@/lib/utils'
+import {cn} from '@/ui/tw'
 import {Card, CardContent, Badge, Text} from '@/ui/atoms'
+import {formatPrice} from '@/utils/format'
 
 interface ProductCardProps {
   product: Product
@@ -12,16 +13,9 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({product, onPress, className}) => {
-  const handlePress = () => {
+  const handlePress = useCallback(() => {
     onPress(product)
-  }
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price)
-  }
+  }, [onPress, product])
 
   return (
     <TouchableOpacity onPress={handlePress} className={cn('mb-4', className)} activeOpacity={0.95}>

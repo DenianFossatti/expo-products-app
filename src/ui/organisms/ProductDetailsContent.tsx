@@ -3,6 +3,7 @@ import {View, ScrollView, Image, Dimensions} from 'react-native'
 import {Star, Package, Truck, Shield} from 'lucide-react-native'
 import {Product} from '@/types/domain.types'
 import {Card, CardContent, Badge, Text} from '@/ui/atoms'
+import {formatPrice} from '@/utils/format'
 
 const {width: screenWidth} = Dimensions.get('window')
 
@@ -11,13 +12,6 @@ interface ProductDetailsContentProps {
 }
 
 export const ProductDetailsContent: React.FC<ProductDetailsContentProps> = ({product}) => {
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price)
-  }
-
   return (
     <ScrollView className='flex-1' showsVerticalScrollIndicator={false}>
       <View className='bg-white'>
