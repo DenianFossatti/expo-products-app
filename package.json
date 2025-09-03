@@ -69,5 +69,8 @@
     "tsx": "^4.20.5",
     "typescript": "~5.8.3"
   },
+  "engines": {
+    "node": ">=22"
+  },
   "private": true
 }
