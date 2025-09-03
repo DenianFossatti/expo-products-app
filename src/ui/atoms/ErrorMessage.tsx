@@ -1,7 +1,7 @@
 import React from 'react'
 import {View} from 'react-native'
 import {AlertCircle, RefreshCw} from 'lucide-react-native'
-import {cn} from '@/ui/tw'
+import {cn} from '@/ui/utils/tw'
 import {Button} from './Button'
 import {Card, CardContent} from './Card'
 import {Text} from './Text'

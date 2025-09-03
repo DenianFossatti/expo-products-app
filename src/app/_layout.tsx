@@ -2,12 +2,11 @@ import '../global.css'
 import {Slot} from 'expo-router'
 import {PortalHost} from '@rn-primitives/portal'
 import {SafeAreaProvider} from 'react-native-safe-area-context'
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
-import {useState} from 'react'
-import {ApiError} from '@/services/api/client'
+import {QueryClientProvider} from '@tanstack/react-query'
 import {ErrorBoundary} from '@/ErrorBoundary'
 import {OneSignal} from 'react-native-onesignal'
 import {env} from '@/env'
+import {queryClient} from '@/modules/shared/services/react-query'
 
 OneSignal.initialize(env.ONESIGNAL_APP_ID)
 OneSignal.Notifications.requestPermission(false)
@@ -18,27 +17,6 @@ export const unstable_settings = {
 }
 
 export default function Layout() {
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            gcTime: 10 * 60 * 1000, // 10 minutes
-            retry: (failureCount, error) => {
-              if (error instanceof ApiError && error.status === 404) {
-                return false
-              }
-              return failureCount < 3
-            },
-            retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
-            refetchOnWindowFocus: true,
-            refetchOnReconnect: true,
-            refetchOnMount: true,
-          },
-        },
-      })
-  )
-
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>

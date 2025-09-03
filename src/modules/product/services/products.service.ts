@@ -1,4 +1,4 @@
-import {ApiClient} from './api/client'
+import {ApiClient} from '../../shared/services/client'
 import {ProductsResponseDTO, ProductDTO, CategoryDTO} from '../types/api.types'
 
 import {env} from '@/env'

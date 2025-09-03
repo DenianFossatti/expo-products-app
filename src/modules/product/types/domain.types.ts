@@ -12,7 +12,6 @@ export interface Product {
   images: string[]
   isInStock: boolean
   discountedPrice: number
-  // Additional fields for product details
   tags?: string[]
   sku?: string
   weight?: number

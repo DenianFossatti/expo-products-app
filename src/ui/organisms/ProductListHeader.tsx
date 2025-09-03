@@ -2,7 +2,16 @@ import React from 'react'
 import {View} from 'react-native'
 import {ProductFilter, ProductSort} from '@/ui/molecules'
 import {Text} from '@/ui/atoms'
-import {Category, ProductSort as ProductSortType} from '@/types/domain.types'
+
+export type ProductSortType = {
+  field: 'price' | 'rating' | 'title'
+  order: 'asc' | 'desc'
+}
+
+export type CategoryType = {
+  slug: string
+  name: string
+}
 
 interface ProductListHeaderProps {
   title: string
@@ -10,7 +19,7 @@ interface ProductListHeaderProps {
   currentProducts: number
   hasActiveFilters: boolean
   // Filter props
-  categories?: Category[]
+  categories?: CategoryType[]
   categoriesLoading: boolean
   selectedCategory?: string
   activeFiltersCount: number

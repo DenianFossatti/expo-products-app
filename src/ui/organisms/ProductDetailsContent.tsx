@@ -1,9 +1,9 @@
 import React from 'react'
 import {View, ScrollView, Image, Dimensions} from 'react-native'
 import {Star, Package, Truck, Shield} from 'lucide-react-native'
-import {Product} from '@/types/domain.types'
+import {Product} from '@/modules/product/types/domain.types'
 import {Card, CardContent, Badge, Text} from '@/ui/atoms'
-import {formatPrice} from '@/utils/format'
+import {formatPrice} from '@/modules/shared/utils/format'
 
 const {width: screenWidth} = Dimensions.get('window')
 

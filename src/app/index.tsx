@@ -1,10 +1,10 @@
-import React, {useMemo, useCallback, useEffect, useRef} from 'react'
-import {useInfiniteProducts} from '@/hooks/useProducts'
-import {useFilterStore} from '@/stores/filter.store'
-import {useCategories} from '@/hooks/useCategories'
+import {useMemo, useCallback, useEffect, useRef} from 'react'
+import {useInfiniteProducts} from '@/modules/product/hooks/useProducts'
+import {useFilterStore} from '@/modules/product/stores/filter.store'
+import {useCategories} from '@/modules/product/hooks/useCategories'
 import {HomeTemplate} from '@/ui/templates'
-import {ProductSort as ProductSortType, Product} from '@/types/domain.types'
-import {GetProductsParams} from '@/services/products.service'
+import {ProductSort as ProductSortType, Product} from '@/modules/product/types/domain.types'
+import {GetProductsParams} from '@/modules/product/services/products.service'
 import {useGlobalSearchParams, router} from 'expo-router'
 
 export default function ProductsScreen() {

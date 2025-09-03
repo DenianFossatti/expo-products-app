@@ -1,9 +1,13 @@
-import React, {useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import {View, Modal, ScrollView} from 'react-native'
 import {Filter, X} from 'lucide-react-native'
-import {cn} from '@/ui/tw'
+import {cn} from '@/ui/utils/tw'
 import {Button, Badge, Text} from '@/ui/atoms'
-import {Category} from '@/types/domain.types'
+
+export type Category = {
+  slug: string
+  name: string
+}
 
 interface ProductFilterProps {
   categories?: Category[]
@@ -18,24 +22,50 @@ interface ProductFilterProps {
 export const ProductFilter: React.FC<ProductFilterProps> = ({
   categories,
   categoriesLoading,
-  selectedCategory,
+  selectedCategory: initialSelectedCategory,
   activeFiltersCount,
   hasFilters,
   onCategorySelect,
   onClearFilters,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(initialSelectedCategory)
 
-  const handleClearFilters = () => {
+  const handleClearFilters = useCallback(() => {
     onClearFilters()
     setIsModalVisible(false)
-  }
+  }, [onClearFilters, setIsModalVisible])
+
+  const handleModalChange = useCallback(
+    (isVisible: boolean) => () => {
+      setIsModalVisible(isVisible)
+    },
+    [setIsModalVisible]
+  )
+
+  const handleCategorySelect = useCallback(
+    (categorySlug: string) => () => {
+      setSelectedCategory(categorySlug)
+    },
+    [setSelectedCategory]
+  )
+
+  const onApply = useCallback(() => {
+    onCategorySelect(selectedCategory)
+    setIsModalVisible(false)
+  }, [onCategorySelect, selectedCategory])
+
+  useEffect(() => {
+    if (isModalVisible) return
+
+    setSelectedCategory(initialSelectedCategory)
+  }, [initialSelectedCategory, isModalVisible])
 
   return (
     <>
       <Button
         variant={hasFilters ? 'default' : 'outline'}
-        onPress={() => setIsModalVisible(true)}
+        onPress={handleModalChange(true)}
         className='flex-row items-center space-x-2'
       >
         <Filter
@@ -55,11 +85,11 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
         visible={isModalVisible}
         animationType='slide'
         presentationStyle='pageSheet'
-        onRequestClose={() => setIsModalVisible(false)}
+        onRequestClose={handleModalChange(false)}
       >
         <View className='flex-1 bg-background'>
           <View className='flex-row items-center justify-between border-b border-border bg-card p-4'>
-            <Button variant='ghost' onPress={() => setIsModalVisible(false)}>
+            <Button variant='ghost' onPress={handleModalChange(false)}>
               <X size={20} className='text-foreground' />
             </Button>
 
@@ -83,7 +113,7 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
                       key={category.slug}
                       variant={selectedCategory === category.slug ? 'default' : 'outline'}
                       size='sm'
-                      onPress={() => onCategorySelect(category.slug)}
+                      onPress={handleCategorySelect(category.slug)}
                       className='rounded-full'
                     >
                       <Text
@@ -102,7 +132,7 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
           </ScrollView>
 
           <View className='border-t border-border bg-card p-4'>
-            <Button onPress={() => setIsModalVisible(false)} className='w-full'>
+            <Button onPress={onApply} className='w-full'>
               <Text className='text-white'>Apply Filters</Text>
             </Button>
           </View>

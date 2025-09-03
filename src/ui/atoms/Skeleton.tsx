@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, ViewProps} from 'react-native'
-import {cn} from '@/ui/tw'
+import {cn} from '@/ui/utils/tw'
 
 interface SkeletonProps extends ViewProps {
   className?: string

@@ -1,10 +1,10 @@
 import React, {useCallback} from 'react'
 import {View, Image, TouchableOpacity} from 'react-native'
 import {Star} from 'lucide-react-native'
-import {Product} from '@/types/domain.types'
-import {cn} from '@/ui/tw'
+import {Product} from '@/modules/product/types/domain.types'
+import {cn} from '@/ui/utils/tw'
 import {Card, CardContent, Badge, Text} from '@/ui/atoms'
-import {formatPrice} from '@/utils/format'
+import {formatPrice} from '@/modules/shared/utils/format'
 
 interface ProductCardProps {
   product: Product

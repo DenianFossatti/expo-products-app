@@ -2,7 +2,7 @@ import React from 'react'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import {LoadingSpinner, ErrorMessage, Text} from '@/ui/atoms'
 import {ProductDetailsHeader, ProductDetailsContent, NotFoundMessage} from '@/ui/organisms'
-import {Product} from '@/types/domain.types'
+import {Product} from '@/modules/product/types/domain.types'
 
 interface ProductDetailsTemplateProps {
   isLoading: boolean

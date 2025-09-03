@@ -1,6 +1,6 @@
 import React, {useCallback, useMemo} from 'react'
 import {FlatList, RefreshControl, View} from 'react-native'
-import {Product} from '@/types/domain.types'
+import {Product} from '@/modules/product/types/domain.types'
 import {ProductCard, ProductListFooter} from '@/ui/molecules'
 import {Button, Text} from '@/ui/atoms'
 

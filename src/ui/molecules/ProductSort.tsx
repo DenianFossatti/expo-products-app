@@ -1,9 +1,13 @@
 import React, {useState} from 'react'
 import {View, TouchableOpacity, Modal} from 'react-native'
 import {ArrowUpDown, X, Check} from 'lucide-react-native'
-import {ProductSort as ProductSortType} from '@/types/domain.types'
-import {cn} from '@/ui/tw'
+import {cn} from '@/ui/utils/tw'
 import {Button, Text} from '@/ui/atoms'
+
+type ProductSortType = {
+  field: 'price' | 'rating' | 'title'
+  order: 'asc' | 'desc'
+}
 
 const SORT_OPTIONS: {
   label: string

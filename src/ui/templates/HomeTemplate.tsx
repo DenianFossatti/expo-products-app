@@ -2,7 +2,7 @@ import React from 'react'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import {LoadingSpinner, ErrorMessage, Text} from '@/ui/atoms'
 import {ProductListHeader, ProductList} from '@/ui/organisms'
-import {Product, Category, ProductSort as ProductSortType} from '@/types/domain.types'
+import {Product, Category, ProductSort as ProductSortType} from '@/modules/product/types/domain.types'
 
 interface HomeTemplateProps {
   // Loading states
