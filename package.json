@@ -11,7 +11,6 @@
     "prebuild": "expo prebuild",
     "lint": "expo lint",
     "lint:fix": "expo lint --fix",
-    "lint:ci": "expo lint --ci",
     "test": "jest --passWithNoTests",
     "test:ci": "test --ci",
     "typecheck": "tsc --noEmit",
