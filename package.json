@@ -11,6 +11,9 @@
     "prebuild": "expo prebuild",
     "lint": "expo lint",
     "lint:fix": "expo lint --fix",
+    "lint:ci": "expo lint --ci",
+    "test": "jest --passWithNoTests",
+    "test:ci": "test --ci",
     "typecheck": "tsc --noEmit",
     "env:check": "tsx --env-file .env ./src/env.ts",
     "prepare": "husky"
@@ -49,6 +52,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "^30.0.0",
     "@types/react": "~19.0.10",
     "eslint": "^9.0.0",
     "eslint-config-expo": "~9.2.0",
@@ -57,6 +62,8 @@
     "eslint-plugin-tailwindcss": "^3.18.2",
     "eslint-plugin-unused-imports": "^4.2.0",
     "husky": "^9.1.7",
+    "jest": "~29.7.0",
+    "jest-expo": "~53.0.10",
     "lint-staged": "^16.1.6",
     "prettier": "^3.6.2",
     "tsx": "^4.20.5",

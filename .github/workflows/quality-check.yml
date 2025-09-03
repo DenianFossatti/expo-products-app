@@ -1,0 +1,34 @@
+name: Quality Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  test:
+    name: Quality Gate
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message , '[skip ci]')"
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup
+        uses: actions/setup-node@v4
+        with:
+          cache: yarn
+          cache-dependency-path: "yarn.lock"
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run lint
+        run: yarn lint:ci ./src
+
+      - name: Run typecheck
+        run: yarn typecheck
+
+      - name: Run tests
+        run: yarn test:ci
