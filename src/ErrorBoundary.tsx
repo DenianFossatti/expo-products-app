@@ -22,7 +22,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps> {
 
   async componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('ErrorBoundary', error, errorInfo)
-    // logger.error('ErrorBoundary', tag ?? 'ErrorBoundary', true, error, {error: error.message, errorId, errorInfo})
   }
 
   render() {

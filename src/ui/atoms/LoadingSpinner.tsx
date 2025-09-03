@@ -23,7 +23,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
     <View className={cn('flex-1 justify-center items-center p-8', className)}>
       <View className='items-center space-y-3'>
         {variant === 'spinner' ? (
-          <ActivityIndicator size={size as any} className='text-primary' />
+          <ActivityIndicator size={size} className='text-primary' />
         ) : (
           <View className='animate-spin'>
             <Loader2 size={iconSize} className='text-primary' />

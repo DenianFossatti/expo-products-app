@@ -1,4 +1,4 @@
-import {ApiErrorDTO} from '../../product/types/api.types'
+import {ApiErrorDTO} from '@/modules/product/types/api.types'
 
 export class ApiError extends Error {
   constructor(
