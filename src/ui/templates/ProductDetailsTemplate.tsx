@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView} from 'react-native-safe-area-context'
+import {View} from 'react-native'
 import {LoadingSpinner, ErrorMessage, Text} from '@/ui/atoms'
 import {ProductDetailsHeader, ProductDetailsContent, NotFoundMessage} from '@/ui/organisms'
 import {Product} from '@/modules/product/types/domain.types'
@@ -23,38 +23,38 @@ export const ProductDetailsTemplate: React.FC<ProductDetailsTemplateProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <SafeAreaView className='flex-1 bg-gray-50'>
+      <View className='flex-1'>
         <LoadingSpinner />
         <Text className='mt-4 text-center text-gray-600'>Loading product details...</Text>
-      </SafeAreaView>
+      </View>
     )
   }
 
   if (isNotFound) {
     return (
-      <SafeAreaView className='flex-1 bg-gray-50'>
+      <View className='flex-1'>
         <NotFoundMessage
           title='Product not found'
           message='The product you are looking for does not exist or has been removed.'
           onBack={onBack}
           onRetry={onRetry}
         />
-      </SafeAreaView>
+      </View>
     )
   }
 
   if (error || !product) {
     return (
-      <SafeAreaView className='flex-1 bg-gray-50'>
+      <View className='flex-1'>
         <ErrorMessage message='Failed to load product details. Please try again.' onRetry={onRetry} />
-      </SafeAreaView>
+      </View>
     )
   }
 
   return (
-    <SafeAreaView className='flex-1 bg-gray-50'>
+    <View className='flex-1'>
       <ProductDetailsHeader onBack={onBack} />
       <ProductDetailsContent product={product} />
-    </SafeAreaView>
+    </View>
   )
 }

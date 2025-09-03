@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView} from 'react-native-safe-area-context'
+import {View} from 'react-native'
 import {LoadingSpinner, ErrorMessage, Text} from '@/ui/atoms'
 import {ProductListHeader, ProductList} from '@/ui/organisms'
 import {Product, Category, ProductSort as ProductSortType} from '@/modules/product/types/domain.types'
@@ -71,23 +71,23 @@ export const HomeTemplate: React.FC<HomeTemplateProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <SafeAreaView className='flex-1 bg-gray-50'>
+      <View className='flex-1'>
         <LoadingSpinner />
         <Text className='mt-4 text-center text-gray-600'>Loading products...</Text>
-      </SafeAreaView>
+      </View>
     )
   }
 
   if (error) {
     return (
-      <SafeAreaView className='flex-1 bg-gray-50'>
+      <View className='flex-1'>
         <ErrorMessage message='Failed to load products. Please try again.' onRetry={onRetry} />
-      </SafeAreaView>
+      </View>
     )
   }
 
   return (
-    <SafeAreaView className='flex-1 bg-gray-50'>
+    <View className='flex-1'>
       <ProductListHeader
         title='Products'
         totalProducts={totalProducts}
@@ -119,6 +119,6 @@ export const HomeTemplate: React.FC<HomeTemplateProps> = ({
         onProductPress={onProductPress}
         onLoadMore={onLoadMore}
       />
-    </SafeAreaView>
+    </View>
   )
 }

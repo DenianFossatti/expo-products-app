@@ -1,7 +1,7 @@
 import '../global.css'
 import {Slot} from 'expo-router'
 import {PortalHost} from '@rn-primitives/portal'
-import {SafeAreaProvider} from 'react-native-safe-area-context'
+import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context'
 import {QueryClientProvider} from '@tanstack/react-query'
 import {ErrorBoundary} from '@/ErrorBoundary'
 import {OneSignal} from 'react-native-onesignal'
@@ -21,8 +21,10 @@ export default function Layout() {
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <SafeAreaProvider>
-          <Slot />
-          <PortalHost />
+          <SafeAreaView className='flex-1 bg-gray-50'>
+            <Slot />
+            <PortalHost />
+          </SafeAreaView>
         </SafeAreaProvider>
       </QueryClientProvider>
     </ErrorBoundary>
